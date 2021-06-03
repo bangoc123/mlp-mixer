@@ -12,6 +12,7 @@ if __name__ == "__main__":
     # parser.add_argument("--weight-decay", default=1e-4, type=float)
     parser.add_argument("--train-folder", default='{}/data/train'.format(home_dir), type=str)
     parser.add_argument("--valid-folder", default='{}/data/validation'.format(home_dir), type=str)
+    parser.add_argument("--model-folder", default='{}/model/mlp/'.format(home_dir), type=str)
     parser.add_argument("--num-classes", default=2, type=int)
     parser.add_argument("--batch-size", default=32, type=int)
     parser.add_argument("--epochs", default=300, type=int)
@@ -25,6 +26,18 @@ if __name__ == "__main__":
     parser.add_argument("--image-channels", default=3, type=int)
 
     args = parser.parse_args()
+
+    print('---------------------Welcome to ProtonX MLP Mixer-------------------')
+    print('Github: bangoc123')
+    print('Email: protonxai@gmail.com')
+    print('---------------------------------------------------------------------')
+    print('Training MLP-Mixer model with hyper-params:')
+    print('===========================')
+    for i, arg in enumerate(vars(args)):
+        print('{}.{}: {}'.format(i, arg, vars(args)[arg]))
+    print('===========================')
+
+
 
     train_folder = args.train_folder
     valid_folder = args.valid_folder
@@ -57,21 +70,13 @@ if __name__ == "__main__":
     S = (args.image_size * args.image_size) // (args.patch_size * args.patch_size)
     C = args.patch_size * args.patch_size * args.image_channels
 
-    print('---------------------Welcome to ProtonX MLP Mixer-------------------')
-    print('Github: bangoc123')
-    print('Email: protonxai@gmail.com')
-    print('---------------------------------------------------------------------')
-    print('Training MLP-Mixer model with hyper-params:')
-    print('===========================')
-    for i, arg in enumerate(vars(args)):
-        print('{}.{}: {}'.format(i, arg, vars(args)[arg]))
-    print('===========================')
+    
     
     # Initializing model
     mlpmixer = MLPMixer(args.patch_size, S, C, args.ds, args.dc, args.num_of_mlp_blocks, args.image_size, args.batch_size, args.num_classes)
 
     # Set up loss function
-    loss_object = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True, reduction='none')
+    loss_object = tf.keras.losses.SparseCategoricalCrossentropy()
 
     # Optimizer Definition
     adam = tf.keras.optimizers.Adam(learning_rate=args.learning_rate)
@@ -79,6 +84,15 @@ if __name__ == "__main__":
     # Compile optimizer and loss function into model
     mlpmixer.compile(optimizer=adam, loss=loss_object, metrics=['acc'])
 
+
     # Do Training model
-    mlpmixer.fit(train_ds, epochs=args.epochs, batch_size=args.batch_size, validation_data=val_ds)
+    mlpmixer.fit(train_ds, 
+        epochs=args.epochs, 
+        batch_size=args.batch_size, 
+        validation_data=val_ds,
+    )
+
+    # Saving model
+    mlpmixer.save(args.model_folder)
+    
 

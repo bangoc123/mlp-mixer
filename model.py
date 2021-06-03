@@ -108,7 +108,7 @@ class MLPMixer(tf.keras.models.Model):
     self.classificationLayer = Sequential([
           GlobalAveragePooling1D(),
           Dropout(0.2),
-          Dense(num_classes)
+          Dense(num_classes, activation='softmax')
     ])
 
   def extract_patches(self, images, patch_size):
