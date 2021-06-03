@@ -24,12 +24,14 @@ This library belongs to our project: [Papers-Videos-Code](https://docs.google.co
 
 ### II. Set up your dataset.
 
-A folder `./data/train` and `./data/validation` were created already to help you better in organizing your data. `Please copy` your images with the corresponding names into those folders.
+Create 2 folders `train` and `validation` in the `data` folder (which was created already). Then `Please copy` your images with the corresponding names into these folders.
 
 - `train` folder was used for the training process
 - `validation` folder was used for validating training result after each epoch 
 
 This library use `image_dataset_from_directory` API from `Tensorflow 2.0` to load images. Make sure you have some understanding of how it works via [its document](https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing/image_dataset_from_directory).
+
+Structure of these folders.
 
 ```
 train/
