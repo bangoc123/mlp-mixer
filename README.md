@@ -62,7 +62,7 @@ validation/
 ### III. Train your model by running this command line
 
 ```bash
-python train.py --epochs ${epochs} num-classes ${num_classes}
+python train.py --epochs ${epochs} --num-classes ${num_classes}
 ```
 
 You want to train a model in 10 epochs for binary classification problems (with 2 classes)
@@ -70,7 +70,7 @@ You want to train a model in 10 epochs for binary classification problems (with 
 Example: 
 
 ```bash
-python train.py --epochs 10 num-classes 2
+python train.py --epochs 10 --num-classes 2
 ```
 
 There are some `important` arguments for the script you should consider when running it:
