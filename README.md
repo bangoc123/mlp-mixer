@@ -8,7 +8,7 @@ Author:
 
 This library belongs to our project: [Papers-Videos-Code](https://docs.google.com/document/d/1bjmwsYFafizRXlZyJFazd5Jcr3tqpWSiHLvfllWRQBc/edit?usp=sharing) where we will implement AI SOTA papers and publish all source code. Additionally, videos to explain these models will be uploaded to ProtonX Youtube channels.
 
-![image](./images/architecture2.PNG)
+![image](https://github.com/bangoc123/mlp-mixer/blob/main/images/architecture2.png)
 
 <!-- <img src=./images/architecture.png width=400> -->
 
