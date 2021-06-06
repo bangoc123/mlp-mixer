@@ -18,6 +18,7 @@ if __name__ == "__main__":
     parser.add_argument("--epochs", default=300, type=int)
     parser.add_argument("--dc", default=2048, type=int, help='Token-mixing units')
     parser.add_argument("--ds", default=256, type=int, help='Channel-mixing units')
+    parser.add_argument("--c", default=512, type=int, help='Projection units')
     parser.add_argument("--image-size", default=150, type=int)
     parser.add_argument("--patch-size", default=5, type=int)
     parser.add_argument("--num-of-mlp-blocks", default=8, type=int)
@@ -68,12 +69,12 @@ if __name__ == "__main__":
     assert args.image_channels == 3, 'Unfortunately, model accepts jpg images with 3 channels so far'
     
     S = (args.image_size * args.image_size) // (args.patch_size * args.patch_size)
-    C = args.patch_size * args.patch_size * args.image_channels
+    # C = args.patch_size * args.patch_size * args.image_channels
 
     
     
     # Initializing model
-    mlpmixer = MLPMixer(args.patch_size, S, C, args.ds, args.dc, args.num_of_mlp_blocks, args.image_size, args.batch_size, args.num_classes)
+    mlpmixer = MLPMixer(args.patch_size, S, args.c, args.ds, args.dc, args.num_of_mlp_blocks, args.image_size, args.batch_size, args.num_classes)
 
     # Set up loss function
     loss_object = tf.keras.losses.SparseCategoricalCrossentropy()

@@ -128,7 +128,7 @@ class MLPMixer(tf.keras.models.Model):
 
   def call(self, images):
     # input
-    # images: (batch_size, IMAGE_SIZE, IMAGE_SIZE, 3) = (32, 64, 64, 3)
+    # images shape: (batch_size, image_size, image_size, 3) = (32, 64, 64, 3)
 
     batch_size = images.shape[0]
     
@@ -136,16 +136,20 @@ class MLPMixer(tf.keras.models.Model):
 
     # assert augumented_images.shape == (batch_size, self.image_size, self.image_size, 3)
 
-    # patches: (batch_size, S, C) 
+    # patches shape: (batch_size, S, 3 * patch_size ** 2) 
     X = self.extract_patches(augumented_images, self.patch_size)
 
-    # assert X.shape == (batch_size, self.S, self.C), (X.shape, self.S, self.C)
+    # Per-patch Fully-connected
+    # X shape: (batch_size, S, C) 
+    X = self.projection(X)
+
+    # assert X.shape == (batch_size, self.S, self.C)
     for block in self.mlpBlocks:
       X = block(X)
 
-    # assert X.shape == (batch_size, self.S, self.C), (batch_size, self.S, self.C)
+    # assert X.shape == (batch_size, self.S, self.C)
 
-    # out: (batch_size, C)
+    # out shape: (batch_size, C)
     out = self.classificationLayer(X)
 
     # assert out.shape == (batch_size, self.num_classes)
