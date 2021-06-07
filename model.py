@@ -35,11 +35,11 @@ class MLPBlock(tf.keras.layers.Layer):
     self.DS = DS
     self.DC = DC
     self.W1 = tf.Variable(
-            initial_value=w_init(shape=(DS, S), dtype="float32"),
+            initial_value=w_init(shape=(S, DS), dtype="float32"),
             trainable=True,
     )
     self.W2 = tf.Variable(
-            initial_value=w_init(shape=(S, DS), dtype="float32"),
+            initial_value=w_init(shape=(DS, S), dtype="float32"),
             trainable=True,
     )
     self.W3 = tf.Variable(
@@ -56,22 +56,23 @@ class MLPBlock(tf.keras.layers.Layer):
     batch_size, S, C = X.shape
     
     # Token-mixing
-    W1X = tf.matmul(self.W1, self.layerNorm1(X)) # (DS, S) x (..., S, C) = (..., DS, C)
+    # (..., C, S)
+    X_T = tf.transpose(self.layerNorm1(X), perm=(0, 2, 1))
 
-    # assert W1X.shape == (batch_size, self.DS, C)
+    # assert X_T.shape == (batch_size, C, S), 'X_T.shape: {}'.format(X_T.shape)
 
-    U = tf.matmul(self.W2, tf.nn.gelu(W1X)) + X  # (S, DS) x (..., DS, C) + (..., S, C) = (..., S, C)
+    W1X = tf.matmul(X_T, self.W1) # (..., C, S) . (S, DS) = (..., C, DS)
 
-    # assert U.shape == (batch_size, S, C)
+    # (..., C, DS) . (DS, S) == (..., C, S)
+    # (..., C, S). T == (..., S, C)
+    # (..., S, C) + (..., S, C) = (..., S, C)
+    U = tf.transpose(tf.matmul(tf.nn.gelu(W1X), self.W2), perm=(0, 2, 1)) + X
 
     # Channel-minxing
-    W3U = tf.matmul(self.layerNorm2(U), self.W3) # (...,S, C) x (C, DC) = (..., S, DC)
     
-    # assert W3U.shape == (batch_size, S, self.DC)
-    
-    Y = tf.matmul(tf.nn.gelu(W3U), self.W4) + U  # (..., S, DC) x (..., DC, C) + (..., S, C) = (..., S, C)
+    W3U = tf.matmul(self.layerNorm2(U), self.W3) # (...,S, C) . (C, DC) = (..., S, DC)
 
-    # assert Y.shape == (batch_size, S, C)
+    Y = tf.matmul(tf.nn.gelu(W3U), self.W4) + U  # (..., S, DC) . (..., DC, C) + (..., S, C) = (..., S, C)
 
     return Y
 
