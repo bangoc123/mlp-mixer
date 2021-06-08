@@ -81,8 +81,8 @@ There are some `important` arguments for the script you should consider when run
 -  `num-classes`: The number of your problem classes.  
 - `batch-size`: The batch size of the dataset
 - `c`: Patch Projection Dimension
-- `dc`: Token-mixing units. It was mentioned in the paper on [page 3](https://arxiv.org/pdf/2105.01601.pdf)
-- `ds`: Channel-mixing units. It was mentioned in the paper on [page 3](https://arxiv.org/pdf/2105.01601.pdf)
+- `ds`: Token-mixing units. It was mentioned in the paper on [page 3](https://arxiv.org/pdf/2105.01601.pdf)
+- `dc`: Channel-mixing units. It was mentioned in the paper on [page 3](https://arxiv.org/pdf/2105.01601.pdf)
 - `num-of-mlp-blocks`: The number of MLP Blocks
 - `learning-rate`: The learning rate of Adam Optimizer
 
