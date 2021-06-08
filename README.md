@@ -8,7 +8,7 @@ Author:
 
 This library belongs to our project: [Papers-Videos-Code](https://docs.google.com/document/d/1bjmwsYFafizRXlZyJFazd5Jcr3tqpWSiHLvfllWRQBc/edit?usp=sharing) where we will implement AI SOTA papers and publish all source code. Additionally, videos to explain these models will be uploaded to ProtonX Youtube channels.
 
-![image](https://storage.googleapis.com/protonx-cloud-storage/Capture5.PNG)
+![image](https://storage.googleapis.com/protonx-cloud-storage/Capture3.PNG)
 
 <!-- <img src=./images/architecture.png width=400> -->
 
