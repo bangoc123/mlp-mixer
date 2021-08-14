@@ -2,6 +2,10 @@
 
 Implementation for paper [MLP-Mixer: An all-MLP Architecture for Vision](https://arxiv.org/pdf/2105.01601.pdf). Give us a star if you like this repo.
 
+Run it on colab:
+
+<a href="https://colab.research.google.com/drive/1CfUq7vGV_ZHvn28qSfoOnAFqUbZe8mCR?usp=sharing"><img src="https://storage.googleapis.com/protonx-cloud-storage/colab_favicon_256px.png" width=80> </a>
+
 Author:
 - Github: bangoc123
 - Email: protonxai@gmail.com
